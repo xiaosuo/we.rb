@@ -278,7 +278,7 @@ def render_weather(data, left, right)
 end
 
 screen_width = `stty size`.split(' ')[1].to_i
-if screen_width < 32
+if screen_width < $cell_len + 2
   puts "Your window is too small to show a cell"
   exit(1)
 end
@@ -293,7 +293,7 @@ lines = []
 width = $cell_len + 2
 left = :left
 days.times do |i|
-  right = (width + 31 > screen_width || i == days - 1) ? :right : :center 
+  right = (width + $cell_len + 1 > screen_width || i == days - 1) ? :right : :center
   lines << render_weather(list[i], left, right)
   if right == :right
     lines.transpose.each do |line|
